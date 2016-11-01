@@ -1,0 +1,22 @@
+baseurl = "https://abraverm.github.io" # Controls base URL
+title = "My New Hugo Site" # Homepage title and page title suffix
+languageCode = "en-us" # Controls site language
+paginate = 11 # Number of posts to show before paginating
+theme = "after-dark" # default theme
+
+enableRobotsTXT = true # Suggested, enable robots.txt file
+# googleAnalytics = "" # Optional, add tracking Id for analytics
+# disqusShortname = "" # Optional, add Disqus shortname for comments
+SectionPagesMenu = "main" # Enable menu system for lazy bloggers
+footnoteReturnLinkContents = "↩" # Provides a nicer footnote return link
+
+[params]
+  description = "" # Suggested, controls default description meta
+  author = "Alexander Braverman Masis"
+  hide_author = false # Optional, set true to hide author name on posts
+  show_menu = false # Optional, set true to enable section menu
+  powered_by = false # Optional, set false to disable credits
+  images = [
+    "https://source.unsplash.com/category/technology/1600x900"
+  ] # Suggested, controls default Open Graph images
+  theme_variant = "" # Optional, for use to overriding default theme
