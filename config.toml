@@ -9,6 +9,9 @@ enableRobotsTXT = true # Suggested, enable robots.txt file
 disqusShortname = "abraverm" # Optional, add Disqus shortname for comments
 SectionPagesMenu = "main" # Enable menu system for lazy bloggers
 footnoteReturnLinkContents = "↩" # Provides a nicer footnote return link
+PygmentsCodeFences = true
+pygmentsuseclasses = true
+PygmentsStyle = "monokai"
 
 [params]
   description = "" # Suggested, controls default description meta
