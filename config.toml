@@ -1,4 +1,4 @@
-baseurl = "https://abraverm.github.io" # Controls base URL
+jaseurl = "https://abraverm.github.io" # Controls base URL
 title = "My New Hugo Site" # Homepage title and page title suffix
 languageCode = "en-us" # Controls site language
 paginate = 11 # Number of posts to show before paginating
@@ -18,7 +18,7 @@ PygmentsStyle = "monokai"
   author = "Alexander Braverman Masis"
   hide_author = false # Optional, set true to hide author name on posts
   show_menu = false # Optional, set true to enable section menu
-  powered_by = false # Optional, set false to disable credits
+  powered_by = true # Optional, set false to disable credits
   images = [
     "https://source.unsplash.com/category/technology/1600x900"
   ] # Suggested, controls default Open Graph images
