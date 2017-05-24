@@ -1,5 +1,5 @@
-jaseurl = "https://abraverm.github.io" # Controls base URL
-title = "My New Hugo Site" # Homepage title and page title suffix
+baseurl = "https://abraverm.github.io" # Controls base URL
+title = "abraverm" # Homepage title and page title suffix
 languageCode = "en-us" # Controls site language
 paginate = 11 # Number of posts to show before paginating
 theme = "after-dark" # default theme
