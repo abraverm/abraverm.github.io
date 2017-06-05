@@ -50,6 +50,8 @@ easier. To get started you can follow these guides:
  - [pass detailed example][3]
  - [GPG quick start][4]
  - [GPG for Daily Use][5]
+ - [Gentroo GnuPG wiki][12]
+ - [Arch GnuPG wiki][13]
 
 I was excited, and started migrating from LastPass, when I remembered there is
 [automation for it][6]. But damn, it doesn't work with `gpg-agent` for some
@@ -133,3 +135,5 @@ I have pass working from Firefox with Vimperator!
 [9]: https://github.com/ervandew/keyring/blob/master/vimperator/plugin/keyring.js
 [10]: https://github.com/zx2c4/password-store/blob/master/src/password-store.sh#L12
 [11]: https://gist.github.com/abraverm/9ff7599cd89c2b316483dec13172ab85
+[12]: https://wiki.gentoo.org/wiki/GnuPG
+[13]: https://wiki.archlinux.org/index.php/GnuPG
