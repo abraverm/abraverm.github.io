@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Make Ghost.py work from Python virtual environment">
+<meta name="keywords" content="python,ghost.py,virtualenv,best-practise,workaround">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ghost.py venv">
+<meta property="og:url" content="https://abraverm.github.io/2017/05/07/ghost.py-venv/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="Make Ghost.py work from Python virtual environment">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://abraverm.github.io/images/meme_wut.jpg">
+<meta property="og:updated_time" content="2018-07-02T15:19:47.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ghost.py venv">
+<meta name="twitter:description" content="Make Ghost.py work from Python virtual environment">
+<meta name="twitter:image" content="https://abraverm.github.io/images/meme_wut.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abraverm.github.io/2017/05/07/ghost.py-venv/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ghost.py venv | Alex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abraverm.github.io/2017/05/07/ghost.py-venv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alexander Braverman Masis">
+      <meta itemprop="description" content="Alexander Braverman Masis blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ghost.py venv
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-05-07 11:49:15" itemprop="dateCreated datePublished" datetime="2017-05-07T11:49:15+03:00">2017-05-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-02 18:19:47" itemprop="dateModified" datetime="2018-07-02T18:19:47+03:00">2018-07-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Make Ghost.py work from Python virtual environment</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
+<script src='/js/attachTooltips.js'></script>
+<link rel='stylesheet' href='/css/tippy.css'>
+<p>I’m not a professional programmer, and Python is just a tool to GTD. But I also hate doing things sloppily, especially when I think it something I will have to get back to in the future. So when I started working on a long term solution I wanted to do it right. For me, modern open source project must avoid <a href="https://en.wikipedia.org/wiki/Dependency_hell" target="_blank" rel="noopener">dependency hell</a> at any stage of project life cycle. In development it means to use isolated, easy to manage environment. Python has a known tool for that called <a href="https://virtualenv.pypa.io/en/stable/" target="_blank" rel="noopener">virtualenv</a>. And naturally when I started working on my small project, I created an environment with virtualenv. However, <a href="http://jeanphix.me/Ghost.py/" target="_blank" rel="noopener">Ghost.py</a>, one of the libraries I wanted to use, decided it doesn’t going to play a long.</p>
+<p>The innocent steps of a noob following <a href="http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/" target="_blank" rel="noopener">documentation</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv my_project</span><br><span class="line">workon my_project</span><br><span class="line">pip install Ghost.py</span><br><span class="line">python -c <span class="string">"from ghost import Ghost"</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>I use IPython to play with libraries but why over complicate a post.</p>
+</blockquote>
+<p>And what did I got?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: No module named QtWebKi</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Gods of development really love me… while I’m writing this post, I’m verifying my steps and what do you know, the issue is not reproducable in a Docker container -_-’</p>
+</blockquote>
+<p>sigh… I hate when your first step is falling.</p>
+<p>The next step is so boringly common - Google it. My first search was what are Ghost.py dependencies. Sometimes, maintainers don’t enforce the dependency during deployment and wait for the user to read their <a href="https://github.com/jeanphix/Ghost.py#installation" target="_blank" rel="noopener">documentation</a>.</p>
+<blockquote>
+<p>Now I noticed my own stupidity, the documentation asks for PySide2, while I did something else and made things worse.</p>
+</blockquote>
+<p>I installed PySide, it was easy but took a long time:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyside</span><br></pre></td></tr></table></figure>
+<p>To my disappointment the issue persisted. My next Google queries took me to unexpected journey:</p>
+<ul>
+<li><a href="https://github.com/jeanphix/Ghost.py/issues/168" target="_blank" rel="noopener">Ghost.py issue 168</a></li>
+<li><a href="https://github.com/jeanphix/Ghost.py/issues/262" target="_blank" rel="noopener">Ghost.py issue 162</a></li>
+<li><a href="http://stackoverflow.com/questions/32701784/centos-7-python-importerror-cannot-import-name-qtwebkit-even-though-its-in-my" target="_blank" rel="noopener">Stackoverflow 1</a></li>
+<li><a href="http://stackoverflow.com/questions/29523541/importerror-no-module-named-pyqt4-qtwebkit" target="_blank" rel="noopener">Stackoverflow 2</a></li>
+<li><a href="https://ubuntuforums.org/showthread.php?t=2253348" target="_blank" rel="noopener">Ubuntu forums</a></li>
+</ul>
+<blockquote>
+<p>OK, it seems the issue is a bit reproducable, but I’m still confused how I got in that mess.</p>
+</blockquote>
+<p>All the links suggest other library is involved, PyQt. And I thought maybe installing it will solve my issues. Guess what…</p>
+<p><strong>You can’t install PyQt with Pip(?!) in virtualenv</strong></p>
+<p>This seems to be a known fact:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/1961997/is-it-possible-to-add-pyqt4-pyside-packages-on-a-virtualenv-sandbox" target="_blank" rel="noopener">Stackoverflow</a></li>
+<li><a href="http://amyboyle.ninja/Python-Qt-and-virtualenv-in-linux" target="_blank" rel="noopener">Ninjas</a></li>
+</ul>
+<p>It started to annoy me, I just want to play a bit with Ghost.py, there are other options out there. Why do I even bother?! does it really worth my time?! is that makes me happy?!</p>
+<p>Well… I didn’t like any of the solutions out there, but linking the os package into the environment seemed to me the easiest path to go with. I used one of the <a href="https://gist.github.com/davidfraser/6555916" target="_blank" rel="noopener">scripts</a> in the searches for doing it (maybe another tool for the box). You know what?</p>
+<p>It didn’t work.</p>
+<p><strong>WTF!</strong></p>
+<blockquote>
+<p>I gave this problem 60% of me, while reading on optimizing ZSH and virtualenv workflow, and leaving for long periods to watch Sense8 new season which is amazing.</p>
+</blockquote>
+<p>The next day I put my thinking hat: “What if PySide and PyQT both provide QtWebKit but for some reason Ghost.py prefers one of them?”. I removed PySide and everything worked, and I said “Huh! that worth a post on my fresh blog”. As I mentioned earlier I wanted to confirm everything in a really clean environment like Docker container. But you know what? Ghost.py worked without PyQt or PySide, in a virtualenv as I planned. So I removed the link to PyQt in my development environment to investigate further, but the gods waited for that and had good laugh on me when I saw that everything works, and I’m like</p>
+<figure>
+<img src="/images/meme_wut.jpg" alt="wut"><figcaption>wut</figcaption>
+</figure>
+<p>Just to make sure the issue is reproducible, I installed PySide with Pip in the container, and walla! here is the issue.</p>
+<p>“It’s a dangerous business, Frodo, going out your door. You step onto the road, and if you don’t keep your feet, there’s no knowing where you might be swept off to.” like to dependency hell, you don’t want to go there.</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/ghost-py/" rel="tag"># ghost.py</a>
+          
+            <a href="/tags/virtualenv/" rel="tag"># virtualenv</a>
+          
+            <a href="/tags/best-practise/" rel="tag"># best-practise</a>
+          
+            <a href="/tags/workaround/" rel="tag"># workaround</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/22/i3_alternative_context_switch/" rel="prev" title="i3 alternative context switch">
+                i3 alternative context switch <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Alexander Braverman Masis</p>
+              <p class="site-description motion-element" itemprop="description">Alexander Braverman Masis blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alexander Braverman Masis</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

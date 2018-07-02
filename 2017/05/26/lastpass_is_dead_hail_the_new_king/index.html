@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="How I stopped worrying about CPU and found peace with Pass">
+<meta name="keywords" content="firefox,gpg,vimperator,pass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LastPass is dead! Hail the new manager">
+<meta property="og:url" content="https://abraverm.github.io/2017/05/26/lastpass_is_dead_hail_the_new_king/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="How I stopped worrying about CPU and found peace with Pass">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://abraverm.github.io/images/wondering_meme.png#floatright">
+<meta property="og:image" content="https://abraverm.github.io/images/Computer-Guy-Facepalm.jpg#floatleft">
+<meta property="og:image" content="https://abraverm.github.io/images/pc_gazing_meme.jpg#floatright">
+<meta property="og:updated_time" content="2018-07-02T18:29:34.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LastPass is dead! Hail the new manager">
+<meta name="twitter:description" content="How I stopped worrying about CPU and found peace with Pass">
+<meta name="twitter:image" content="https://abraverm.github.io/images/wondering_meme.png#floatright">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abraverm.github.io/2017/05/26/lastpass_is_dead_hail_the_new_king/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LastPass is dead! Hail the new manager | Alex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abraverm.github.io/2017/05/26/lastpass_is_dead_hail_the_new_king/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alexander Braverman Masis">
+      <meta itemprop="description" content="Alexander Braverman Masis blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LastPass is dead! Hail the new manager
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-05-26 18:34:15" itemprop="dateCreated datePublished" datetime="2017-05-26T18:34:15+03:00">2017-05-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-02 21:29:34" itemprop="dateModified" datetime="2018-07-02T21:29:34+03:00">2018-07-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/" itemprop="url" rel="index"><span itemprop="name">UI</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/system/" itemprop="url" rel="index"><span itemprop="name">system</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/system/security/" itemprop="url" rel="index"><span itemprop="name">security</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/system/security/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">How I stopped worrying about CPU and found peace with Pass</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
+<script src='/js/attachTooltips.js'></script>
+<link rel='stylesheet' href='/css/tippy.css'>
+<p>About two weeks ago LastPass Firefox plugin was updated and I started to notice that Firefox is taking much more resources. We all know that the browser is a heavy cow on the system, and now its a cow with a wagon. My beast laptop, ThinkPad W541, handled it without sweat with a bit of struggle on cold start and restoring large sessions. I didn’t think about it too much until I was trying to put <a href="https://abraverm.github.io/post/fire_in_two_boxes/">Firefox in a container</a>, which required lots of restarts. Every cold restart Firefox was asking about hanging javascript from the lovely LastPass. And guess what, when I disabled LastPass Firefox became blazing fast, like a running bull. So I left it disabled and didn’t think about it too much.</p>
+<p><img src="/images/wondering_meme.png#floatright"> Fortunately, few days later I was working on a new deployment and needed a place to store and share passwords. I was wondering why can’t we share passwords with Git or something, where there is no need in a dedicated server. After short search I found <a href="https://github.com/justwatchcom/gopass" target="_blank" rel="noopener">GoPass</a> which was exactly what I was looking for. Now, GoPass is based on more popular tool called <a href="https://www.passwordstore.org/" target="_blank" rel="noopener">pass</a>, and it has support for Firefox… and it can import passwords from LastPass…</p>
+<p>Go back, what is <code>pass</code>:</p>
+<blockquote>
+<p>Password management should be simple and follow Unix philosophy. With pass, each password lives inside of a gpg encrypted file whose filename is the title of the website or resource that requires the password. These encrypted files may be organized into meaningful folder hierarchies, copied from computer to computer, and, in general, manipulated using standard command line file management utilities.</p>
+</blockquote>
+<p>What is <code>gopass</code>:</p>
+<blockquote>
+<p>The slightly more awesome Standard Unix Password Manager for Teams. Written in Go.</p>
+</blockquote>
+<p>Theoretically you can use <code>pass</code> for shared passwords, but <code>gopass</code> does it much easier. To get started you can follow these guides:</p>
+<ul>
+<li><a href="https://git.zx2c4.com/password-store/about/#EXTENDED%20GIT%20EXAMPLE" target="_blank" rel="noopener">pass detailed example</a></li>
+<li><a href="https://www.madboa.com/geek/gpg-quickstart/" target="_blank" rel="noopener">GPG quick start</a></li>
+<li><a href="http://moser-isi.ethz.ch/gpg.html" target="_blank" rel="noopener">GPG for Daily Use</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/GnuPG" target="_blank" rel="noopener">Gentroo GnuPG wiki</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/GnuPG" target="_blank" rel="noopener">Arch GnuPG wiki</a></li>
+</ul>
+<p>I was excited, and started migrating from LastPass, when I remembered there is <a href="https://git.zx2c4.com/password-store/tree/contrib/importers/lastpass2pass.rb" target="_blank" rel="noopener">automation for it</a>. But damn, it doesn’t work with <code>gpg-agent</code> for some unknown hellish reason. And I had more than 300 passwords(?!). So the script kept asking me for password to open my GPG key, and its pretty long to type. First I thought “well this is a case for ops”, and starting shift-inserting my password. After 20 imports I gave up. Next I developed a <code>expect</code> script, which BTW took <strong>longer than the ops approach</strong>. Anyway, if you encounter this problem, here is the script:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fuck! I lost it...</span><br><span class="line">Good luck to you ;)</span><br></pre></td></tr></table></figure>
+<p>Finally I got all most all of my password in <code>pass</code>, victory! Now… how I’m using it in my containerized Firefox?</p>
+<ol type="1">
+<li>Install gpg inside the container <code>RUN dnf install -y gnupg</code></li>
+<li>I will probably need pass in it too <code>RUN dnf install -y pass</code></li>
+<li>Add the Firefox plugin <a href="https://addons.mozilla.org/en-US/firefox/addon/passff/" target="_blank" rel="noopener">PassFF</a></li>
+</ol>
+<p>That’s it, should work out of the box. In your dreams…</p>
+<p>PassFF listed all the credentials but unable to get them. Tried another plugin for Firefox - <a href="https://addons.mozilla.org/en-US/firefox/addon/browserpass/" target="_blank" rel="noopener">Browserpass</a> - no luck. Step back, <code>docker exec -it firefox_Personal2 bash</code> and <code>pass github.com</code> asking for GPG password.</p>
+<p>Not this again…</p>
+<p>OK. Let’s share the GPG agent with the container: <code>/run/user/1000/gnupg/S.gpg-agent</code>, no luck, and ‘yes’ I made sure to connect to the agent <code>gpg-connect-agent /bye</code>. For some reason, gpg-agent in the container created a socket in <code>~/.gnupg/</code>. I tried so many things and googled the shit out of it. And then I found it!</p>
+<p><img src="/images/Computer-Guy-Facepalm.jpg#floatleft" alt="facepalm"> The problem was with <code>gpg</code> command, while works fine with <code>gpg2</code>. And what about pass? <a href="https://github.com/zx2c4/password-store/blob/master/src/password-store.sh#L12" target="_blank" rel="noopener">pass prefers gpg2</a>, why isn’t it working?</p>
+<p><strong>Because <code>which</code> is not installed in fedora containers.</strong></p>
+<p>The last problem is one that I actually thought off during all the testing, was how to enter the password for GPG key the first time? The answer lies in gpg-agent ‘pinentry-program’ setting, I’ve installed <code>pinentry-gtk</code> package and set the program to <code>/usr/bin/pinentry</code>. I also changed the TTL to something reasonable. The final result looks like this <code>~/.gnupg/gpg-agent.conf</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">default-cache-ttl 999999</span><br><span class="line">max-cache-ttl 999999</span><br><span class="line">pinentry-program /usr/bin/pinentry</span><br><span class="line">allow-loopback-pinentry</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pc_gazing_meme.jpg#floatright" alt="gaze"> Now pass works from shell. Going back to Firefox, and… it still doesn’t work.</p>
+<blockquote>
+<p>sigh</p>
+</blockquote>
+<p>Well I can try to make this plugin work, but do I really need it? I mean, anyway I wanted to make LastPass work with Vimperator, maybe there is a script for pass, geeky enough, no?</p>
+<p>Well there is no such script, but it shouldn’t be too hard. Just to make sure, I searched the web, and I found <a href="https://github.com/ervandew/keyring/blob/master/vimperator/plugin/keyring.js" target="_blank" rel="noopener">something close for ‘keyring’ tool</a>. So I did some manipulations to it and <a href="https://gist.github.com/abraverm/9ff7599cd89c2b316483dec13172ab85" target="_blank" rel="noopener">ta-dam!</a> I have pass working from Firefox with Vimperator!</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/firefox/" rel="tag"># firefox</a>
+          
+            <a href="/tags/gpg/" rel="tag"># gpg</a>
+          
+            <a href="/tags/vimperator/" rel="tag"># vimperator</a>
+          
+            <a href="/tags/pass/" rel="tag"># pass</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/24/fire_in_two_boxes/" rel="next" title="Who needs browser anyway">
+                <i class="fa fa-chevron-left"></i> Who needs browser anyway
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/26/ansible_role_with_test_kitchen/" rel="prev" title="Ansible role with Test Kitchen">
+                Ansible role with Test Kitchen <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Alexander Braverman Masis</p>
+              <p class="site-description motion-element" itemprop="description">Alexander Braverman Masis blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alexander Braverman Masis</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

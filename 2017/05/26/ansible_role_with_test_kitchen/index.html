@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Ansible role development and testing with Test Kitchen in upstream">
+<meta name="keywords" content="ansible,test kitchen,travis-ci">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible role with Test Kitchen">
+<meta property="og:url" content="https://abraverm.github.io/2017/05/26/ansible_role_with_test_kitchen/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="Ansible role development and testing with Test Kitchen in upstream">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-02T13:53:06.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ansible role with Test Kitchen">
+<meta name="twitter:description" content="Ansible role development and testing with Test Kitchen in upstream">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abraverm.github.io/2017/05/26/ansible_role_with_test_kitchen/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Ansible role with Test Kitchen | Alex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abraverm.github.io/2017/05/26/ansible_role_with_test_kitchen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alexander Braverman Masis">
+      <meta itemprop="description" content="Alexander Braverman Masis blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ansible role with Test Kitchen
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-05-26 20:20:41" itemprop="dateCreated datePublished" datetime="2017-05-26T20:20:41+03:00">2017-05-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-02 16:53:06" itemprop="dateModified" datetime="2018-07-02T16:53:06+03:00">2018-07-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Ansible role development and testing with Test Kitchen in upstream</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
+<script src='/js/attachTooltips.js'></script>
+<link rel='stylesheet' href='/css/tippy.css'>
+<p>&lt;%- toc(page.content) %&gt;</p>
+<p>I’ve started working on a new Ansible role, and this is the first upstream project that I feel like to be responsible of. As a DevOps engineer it is important for me to build a good CI, both for upstream and downstream, for development and testing. With the tools I believe in, I started building the CI of the Ansible role, and I was surprised that it was a bit different from anything else on the net. I would like to share with you <strong>how to built upstream CI for Ansible role with Test Kitchen</strong>.</p>
+<h2 id="ansible-role">Ansible Role</h2>
+<blockquote>
+<p>Roles are ways of automatically loading certain vars_files, tasks, and handlers based on a known file structure. Grouping content by roles also allows easy sharing of roles with other users. Roles are just automation around ‘include’ directives as described above, and really don’t contain much additional magic beyond some improvements to search path handling for referenced files.</p>
+</blockquote>
+<p>In other words, Ansbile role is just a complicated playbook for specific task. For example <a href="https://github.com/abraverm/ansible-logstash" target="_blank" rel="noopener">installing and configuring a service such as Logstash</a>. Ansible role sharing is mostly done with Ansible Galaxy tool, if it by <a href="http://docs.ansible.com/ansible/galaxy.html#version" target="_blank" rel="noopener">specifying the Git repository of the role</a>, or from <a href="http://docs.ansible.com/ansible/galaxy.html#id3" target="_blank" rel="noopener">published version in the web</a>. By keeping variables managed outside the role, its quite possible to share many of the roles with the community. But working with other people require a common baseline of discussion, and that’s why testing is critical. Local testing has to be easy and fast to not hold the developer and at the same breath legitimize the work being done. Upstream testing is trusting a third party on the changes being submitted based on agreed testing.</p>
+<h2 id="test-kitchen">Test Kitchen</h2>
+<blockquote>
+<p><a href="http://kitchen.ci/" target="_blank" rel="noopener">Test Kitchen</a> is an integration tool for developing and testing infrastructure code and software on isolated target platforms.</p>
+</blockquote>
+<p>In other words, Test Kitchen is a testing framework for configuration management.</p>
+<h3 id="how-it-works">How it works</h3>
+<p>Example Test Kitchen configuration file <code>.kitchen.yml</code>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">driver:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">docker</span></span><br><span class="line"></span><br><span class="line"><span class="attr">provisioner:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">ansible</span></span><br><span class="line"></span><br><span class="line"><span class="attr">platforms:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">ubuntu-14.04</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">fedora-25</span></span><br><span class="line"></span><br><span class="line"><span class="attr">verifier:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">inspec</span></span><br><span class="line"></span><br><span class="line"><span class="attr">suites:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">use_case_1</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">use_case_2</span></span><br></pre></td></tr></table></figure>
+<p>Test Kitchen will create a test matrix:</p>
+<ul>
+<li>ubuntu-14.04-use_case_1</li>
+<li>ubuntu-14.04-use_case_2</li>
+<li>fedoar-25-use_case_1</li>
+<li>fedoar-25-use_case_2</li>
+</ul>
+<p>For each test, kitchen will do:</p>
+<ol type="1">
+<li>deploy a docker container for the specified platform</li>
+<li>Apply playbook of specified use case</li>
+<li>Verify the results with Inspec for that use case</li>
+</ol>
+<h3 id="why-is-it-a-very-good-ci-framework">Why is it a very good CI framework</h3>
+<p>First of all, Test kitchen implements all <a href="https://en.wikipedia.org/wiki/Continuous_integration#Best_practices" target="_blank" rel="noopener">best practices of Continuous Integration</a> in my opinion but I think there is more to it:</p>
+<ul>
+<li><strong>Local development vs Remote verification</strong> - One of the most common problems I hear from engineers is the difficulty of testing their changes just the same as integration system, Jenkins for example. And it more annoys them when it works locally but not in the shared testing environment. Test Kitchen handles this problem by letting the engineer use <strong>same infrastructure</strong>. Test Kitchen has many plugins that support different infrastructures, called ‘driver’, local such as Docker or remote (clouds) such as OpenStack. In downstream, company internal, development it is better to use private clouds where as developer you are focused on development, and the company is focused on providing the infrastructure. Also, developers can share test environment for investigation. For upstream, public projects, using local based infrastructure such as Docker or Vagrant is a slim way for describing the testing environment and free from system dependency such as versions. Later in the post I will show how to make Test Kitchen work with public CI system - Travis-CI.</li>
+<li><strong>Plugin based architecture</strong> - It seem obvious, but the fact that Test Kitchen architecture is plugin based, makes it flexible to CI world. It means for the maintainer to be able to adjust his CI to the needs of the project. But also to reuse the framework in other project with different needs. There are cases where company might decide to refactor the automation to another language such as from scripts to configuration management with common test process.</li>
+<li><strong>Dynamic test framework</strong> - One of the less known features of Test Kitchen, is that the configuration file is actually compiled prior to loading. The file is compiled with <a href="https://apidock.com/ruby/ERB" target="_blank" rel="noopener">ERB</a>, which allows the configuration to be adjusted to its environment.</li>
+<li><strong>Shared tests</strong> - Using Inspec for verifying the deployment will allow you to load testing <a href="https://www.inspec.io/docs/reference/profiles/" target="_blank" rel="noopener">profiles</a> from remote repositories, this will allow setting testing standards cross project.</li>
+</ul>
+<h2 id="travis-ci">Travis-CI</h2>
+<p>As mentioned above, upstream projects need to be tested by a third party and one popular system is <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis-CI</a> which offers free CI for open source projects, and <a href="https://travis-ci.org/getting_started" target="_blank" rel="noopener">integrates very well with GitHub</a>. The most important feature it has for Ansible is <a href="https://docs.travis-ci.com/user/docker/" target="_blank" rel="noopener">Docker container service</a>. The service allows building Docker images and running containers in a single job. This will be the common ground for Test Kitchen (local CI) and Travis-CI (public CI). Travis also allows running [matrix testing], when the focus is the language version and a set of environment variables. For Ansible the language is Python, but we can consider Ansible version as a factor for testing the module. With that you will have matrix testing of (Ansible version)x(Platform)x(use case). Unfortunately there is no working out of the box Ansible version manager/switcher, except maybe with Python virtualenv.</p>
+<h2 id="template">Template</h2>
+<p>Best examples are the one being used, so checkout my <a href="https://github.com/abraverm/ansible-logstash" target="_blank" rel="noopener">logstash role</a> for complete solution, or download the <a href="http://bundler.io/" target="_blank" rel="noopener">template from GitHub</a>. The following is a detailed cover of the template structure.</p>
+<p>The file structure of the template:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .gitignore</span><br><span class="line">├── .kitchen.yml</span><br><span class="line">├── .travis.yml</span><br><span class="line">├── defaults</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── Gemfile</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── LICENSE</span><br><span class="line">├── meta</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── README.md</span><br><span class="line">├── tasks</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── ansible.cfg</span><br><span class="line">│   ├── init_scripts</span><br><span class="line">│   │   └── fedora</span><br><span class="line">│   └── integration</span><br><span class="line">│       └── default</span><br><span class="line">│           ├── ansible</span><br><span class="line">│           │   └── playbook.yml</span><br><span class="line">│           ├── controls</span><br><span class="line">│           │   └── my_role_spec.rb</span><br><span class="line">│           └── inspec.yml</span><br><span class="line">└── vars</span><br><span class="line">    └── main.yml</span><br></pre></td></tr></table></figure>
+<h3 id="ansible-role-1">Ansible role</h3>
+<p>Ansible role has a default file structure that you can start with by running <code>ansible-galaxy init &lt;name of the module&gt;</code>. It will create a directory with the name of the module, and the following file structure:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── defaults</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── meta</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── README.md</span><br><span class="line">├── tasks</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── tests</span><br><span class="line">│   ├── inventory</span><br><span class="line">│   └── test.yml</span><br><span class="line">└── vars</span><br><span class="line">    └── main.yml</span><br></pre></td></tr></table></figure>
+<p>When using Test Kitchen, you don’t need ‘tests’ directory, because it looks for ‘test’ directory and different file structure in it.</p>
+<blockquote>
+<p>Note: it is highly recommended to maintain ‘meta/main.yml’ well as its critical for ansible-galaxy tool and for publishing to Ansible Galaxy.</p>
+</blockquote>
+<p>Other information on Ansible role development and structure you will find in Ansible documentation.</p>
+<h3 id="test-kitchen-1">Test Kitchen</h3>
+<p>Test Kitchen consists of three main parts:</p>
+<ul>
+<li>Gemfile - preparing your system to run Test Kitchen</li>
+<li>.kitchen.yml - how Test Kitchen is executed</li>
+<li>tests/ - the tests that will be executed by Test Kitchen</li>
+</ul>
+<p>Gemfile is used by a tool named <a href="http://bundler.io/" target="_blank" rel="noopener"><code>bundler</code></a> to install gems, which are ruby libraries. In our case, the Gemfile will look like this:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source <span class="string">'https://rubygems.org'</span></span><br><span class="line"></span><br><span class="line">gem <span class="string">'test-kitchen'</span></span><br><span class="line">gem <span class="string">'inspec'</span></span><br><span class="line">gem <span class="string">'kitchen-docker'</span></span><br><span class="line">gem <span class="string">'kitchen-inspec'</span></span><br><span class="line">gem <span class="string">'kitchen-ansiblepush'</span></span><br></pre></td></tr></table></figure>
+<p>So your automation and users can prepare their environment by just running <code>bundle install</code>. Gemfiles can be much more complex to cover different cases and it designed for developers to clarify what required of the ruby environment. I also believe in simplicity, so don’t over complicate this file until you need to.</p>
+<p>Next is the <code>.kitchen.yml</code> file that used by Test Kitchen how exactly to run things and it will look similar to this:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">driver:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">docker</span></span><br><span class="line"><span class="attr">  socket:</span> <span class="attr">unix:///var/run/docker.sock</span></span><br><span class="line"><span class="attr">  privileged:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  use_sudo:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  hostname:</span> <span class="string">"simple"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">provisioner:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">ansible_push</span></span><br><span class="line"><span class="attr">  chef_bootstrap_url:</span> <span class="string">nil</span></span><br><span class="line"><span class="attr">  ansible_config:</span> <span class="string">"test/ansible.cfg"</span></span><br><span class="line"><span class="attr">  idempotency_test:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  diff:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">platforms:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">fedora-25</span></span><br><span class="line"><span class="attr">    driver:</span></span><br><span class="line"><span class="attr">      run_command:</span> <span class="string">/start</span></span><br><span class="line"><span class="attr">      run_options:</span> <span class="bullet">--tty</span> <span class="bullet">-e</span> <span class="string">'container=docker'</span></span><br><span class="line"><span class="attr">      provision_command:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">dnf</span> <span class="string">install</span> <span class="bullet">-y</span> <span class="string">python</span> <span class="string">systemd</span> <span class="string">python2-dnf</span></span><br><span class="line"><span class="attr">      volume:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">$PWD/test/init_scripts/fedora:/start:ro</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">/sys/fs/cgroup:/sys/fs/cgroup:ro</span></span><br><span class="line"></span><br><span class="line"><span class="attr">verifier:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">inspec</span></span><br><span class="line"></span><br><span class="line"><span class="attr">suites:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">    provisioner:</span></span><br><span class="line"><span class="attr">      playbook:</span> <span class="string">"test/integration/default/ansible/playbook.yml"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">configured</span></span><br><span class="line"><span class="attr">    provisioner:</span></span><br><span class="line"><span class="attr">      playbook:</span> <span class="string">"test/integration/configured/ansible/playbook.yml"</span></span><br></pre></td></tr></table></figure>
+<p>I don’t have really power at the moment explaining all the bits and bolts of what it does, so if you have question, feel free to comment, write me an email, or ping me on IRC. I promise to answer and add it here. But here is the key points:</p>
+<ul>
+<li>Test Kitchen will use Docker as the backend for testing environment. It will run against different Docker images (platforms), in this case only fedora-25. The image is rather minimal and some modifications are needed. I feel they are small enough to not be in a Dockerfile. The reason I choose Docker, is because its light, easy to distribute and can run on developer environment and CI environment (Travis) and it has a very large community.</li>
+<li>Ansible is <strong>usually</strong> push driven, meaning, Ansible is executed locally and does things on remote target. Also not every environment will able to install Ansible to be executed in it. That’s why Test Kitchen should use the ‘ansible_push’ provisioner and not ‘ansible’. Last, this will allow you to test the role with different versions of Ansible in Travis, as I will show you later on.</li>
+<li>Every test case is called ‘suite’ in Test Kitchen, and the default path for needed files are at <code>test/integration/&lt;suite name&gt;</code>. I thought a good place to put ansible playbook at <code>test/integration/&lt;suite name&gt;/ansible/playbook.yml</code>. In the suite directory you will find verification tool files, for inspec it will be <code>inspec.yml</code> and <code>controls\something_spec.rb</code>. Read Inspec documentation on how to verify your playbooks.</li>
+</ul>
+<p>Last, the <code>test/</code> directory… oh wait I just covered it in the last key point above. But I did forget to mention that I also used it to store other files: - <code>ansible.cfg</code> - used by ansible_push to find the ansible role:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[defaults]</span><br><span class="line">roles_path=../:../../:/spec/</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>init_scripts</code> - scripts used by Docker as the commands to start the container with, for example to make systemd to work in the container.</li>
+</ul>
+<p>So basically feel free to put anything related to Test Kitchen in tests directory.</p>
+<p>When you run Test Kitchen, it might create all sort of temporary files, make sure to avoid polluting your Git repository with <code>.gitignore</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Gemfile.lock</span><br><span class="line">.kitchen</span><br><span class="line">**/*.retry</span><br></pre></td></tr></table></figure>
+<h3 id="travis-ci-1">Travis-CI</h3>
+<p>After you <a href="https://travis-ci.org/getting_started" target="_blank" rel="noopener">get started with Travis</a> and connect your GitHub to it, here is an example of <code>.travis.yml</code> for you:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">sudo:</span> <span class="string">required</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span></span><br><span class="line"></span><br><span class="line"><span class="attr">language:</span> <span class="string">python</span></span><br><span class="line"><span class="attr">python:</span> <span class="string">"2.7"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ANSIBLE_VERSION=latest</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ANSIBLE_VERSION=2.3.0.0</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ANSIBLE_VERSION=2.2.0.0</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ANSIBLE_VERSION=2.1.0.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span> <span class="string">pip</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="comment"># Make sure everything's up to date.</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">sudo</span> <span class="string">apt-get</span> <span class="string">update</span> <span class="bullet">-qq</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">sudo</span> <span class="string">apt-get</span> <span class="string">install</span> <span class="bullet">-qq</span> <span class="string">python-apt</span> <span class="string">python-pycurl</span> <span class="string">git</span> <span class="string">python-pip</span> <span class="string">ruby</span> <span class="string">ruby-dev</span> <span class="string">build-essential</span> <span class="string">autoconf</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">gem</span> <span class="string">install</span> <span class="string">bundler</span></span><br><span class="line"></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="comment"># Install Test Kitchen and its dependencies</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">bundle</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Install Ansible</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">if</span> <span class="string">[</span> <span class="string">"$ANSIBLE_VERSION"</span> <span class="string">=</span> <span class="string">"latest"</span> <span class="string">];</span> <span class="string">then</span> <span class="string">pip</span> <span class="string">install</span> <span class="string">ansible;</span> <span class="string">else</span> <span class="string">pip</span> <span class="string">install</span> <span class="string">ansible==$ANSIBLE_VERSION;</span> <span class="string">fi</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">export</span> <span class="string">ANSIBLE_CONFIG="test/ansible.cfg"</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ansible</span> <span class="bullet">--version</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">version</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">sudo</span> <span class="string">locale-gen</span> <span class="string">en_US.UTF-8</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">bundle</span> <span class="string">show</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">LANG=en_US.UTF-8</span> <span class="string">bundle</span> <span class="string">exec</span> <span class="string">kitchen</span> <span class="bullet">--version</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">LANG=en_US.UTF-8</span> <span class="string">bundle</span> <span class="string">exec</span> <span class="string">kitchen</span> <span class="string">test</span> <span class="bullet">-d</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">after_success:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">echo</span> <span class="string">"Success"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  webhooks:</span> <span class="attr">https://galaxy.ansible.com/api/v1/notifications/</span></span><br></pre></td></tr></table></figure>
+<p>I think most of it speaks for it self, but as I mentioned earlier, the beauty in this case is cross Ansible version testing with the ‘env’ section. You can also have cross python validation, and it costs you nothing, but I don’t feel like its really needed at the beginning. Travis has many more features like awesome notifications but this is really a good starting point IMHO.</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+            <a href="/tags/test-kitchen/" rel="tag"># test kitchen</a>
+          
+            <a href="/tags/travis-ci/" rel="tag"># travis-ci</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/26/lastpass_is_dead_hail_the_new_king/" rel="next" title="LastPass is dead! Hail the new manager">
+                <i class="fa fa-chevron-left"></i> LastPass is dead! Hail the new manager
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/27/hugo_sharing_bookmarks/" rel="prev" title="Hugo sharing bookmarks">
+                Hugo sharing bookmarks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Alexander Braverman Masis</p>
+              <p class="site-description motion-element" itemprop="description">Alexander Braverman Masis blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible-role"><span class="nav-number">1.</span> <span class="nav-text">Ansible Role</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test-kitchen"><span class="nav-number">2.</span> <span class="nav-text">Test Kitchen</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#how-it-works"><span class="nav-number">2.1.</span> <span class="nav-text">How it works</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#why-is-it-a-very-good-ci-framework"><span class="nav-number">2.2.</span> <span class="nav-text">Why is it a very good CI framework</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#travis-ci"><span class="nav-number">3.</span> <span class="nav-text">Travis-CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#template"><span class="nav-number">4.</span> <span class="nav-text">Template</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible-role-1"><span class="nav-number">4.1.</span> <span class="nav-text">Ansible role</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-kitchen-1"><span class="nav-number">4.2.</span> <span class="nav-text">Test Kitchen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#travis-ci-1"><span class="nav-number">4.3.</span> <span class="nav-text">Travis-CI</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alexander Braverman Masis</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

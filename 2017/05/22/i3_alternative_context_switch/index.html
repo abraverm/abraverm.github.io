@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Keybinding to more rational and faster context switching">
+<meta name="keywords" content="window manager,i3,productivity,linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="i3 alternative context switch">
+<meta property="og:url" content="https://abraverm.github.io/2017/05/22/i3_alternative_context_switch/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="Keybinding to more rational and faster context switching">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-02T15:25:59.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="i3 alternative context switch">
+<meta name="twitter:description" content="Keybinding to more rational and faster context switching">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abraverm.github.io/2017/05/22/i3_alternative_context_switch/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>i3 alternative context switch | Alex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abraverm.github.io/2017/05/22/i3_alternative_context_switch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alexander Braverman Masis">
+      <meta itemprop="description" content="Alexander Braverman Masis blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">i3 alternative context switch
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-05-22 17:54:33" itemprop="dateCreated datePublished" datetime="2017-05-22T17:54:33+03:00">2017-05-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-02 18:25:59" itemprop="dateModified" datetime="2018-07-02T18:25:59+03:00">2018-07-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/" itemprop="url" rel="index"><span itemprop="name">UI</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UI/system/" itemprop="url" rel="index"><span itemprop="name">system</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Keybinding to more rational and faster context switching</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
+<script src='/js/attachTooltips.js'></script>
+<link rel='stylesheet' href='/css/tippy.css'>
+<p>I like to maximize my productivity as life is short and there are so many things I enjoy doing. My biggest enemy when I’m using the computer is to be forced waiting for something to complete or happen. Such as a tasks that takes 2-5 minutes, or slow discussion with someone. I also hate when I’m in a hurry I get mixed up with different desktops I have. That is each program (context) has its own desktop in the window manager. Each desktop is numbered, so for example, Firefox is usually at desktop number 1. I have something like 5-6 major programs running. Switching to the right desktop number blindly and fast, can be a challenge. Currently I use the key binding $mod+#num. But this proved to be clumsy over time.</p>
+<hr>
+<p><strong>Update 19/05/2017</strong>: Today I’ve returned to write the post as I was busy with possessive and hectic improvement of i3 and other stuff in my system UI. I shoudn’t have postponed my writing, bad me.</p>
+<p>I’m trying to use a new system of keybindings for switching between applications. The idea is to use a specific key combo to switch to target context. For example $mod+F will take me to Firefox. The reason I feel it will be better, is because I will not have to remember the desktop I left things, or find the number on my keyboard, and less chance hitting the wrong number. The two main problems with the method are:</p>
+<ul>
+<li>I will have to get used to using the new keybindings, and I’m not sure how easy it should be.</li>
+<li>I can’t possible cover all possible applications out there or make it “smart” to be usable. So I have to decide what I need to have key binding for.</li>
+</ul>
+<p>My current list of “must” keybinded applications:</p>
+<ol type="1">
+<li>Work browser - Firefox work profile</li>
+<li>Personal browser - Firefox personal profile</li>
+<li>Terminal - Urxvt</li>
+<li>Mail - Mutt</li>
+<li>Chat - WeeChat</li>
+<li>Music - Pianobar</li>
+<li>Blog - custom Tmux server in Urxvt</li>
+<li>Wiki - Personal Vim Wiki</li>
+<li>Journal - Vim Wiki Journal</li>
+</ol>
+<p>The last three probably will unite to a single Tmux server. I noticed that I can’t do so much writing during the day even if all of them open. Maybe I should unite the Mail and WeeChat to another Tmux server… Usage of work browser rarely collide with personal use, so fast switching between them ain’t critical.</p>
+<p>But the most import part is to have extremly fast context switching. Now I already have the “Windows” button mapped for all i3 bind keys, so this causes a minor issue. How bind new keys that make sense such as “$mod+f” for firefox and not overlap with existing bindings like “$mod+f” for fullscreen. After a bit of searching online, I came across <a href="https://i3wm.org/docs/userguide.html#binding_modes" target="_blank" rel="noopener">i3 modes</a>:</p>
+<blockquote>
+<p>You can have multiple sets of bindings by using different binding modes. When you switch to another binding mode, all bindings from the current mode are released and only the bindings defined in the new mode are valid for as long as you stay in that binding mode. The only predefined binding mode is default, which is the mode i3 starts out with and to which all bindings not defined in a specific binding mode belong.</p>
+</blockquote>
+<p>That sounded to me what I was looking for, but boy… making the mode behave like I wanted, wasn’t easy:</p>
+<ol type="1">
+<li>It has to find the correct window: two types of Firefox instances, and multipe terminals.</li>
+<li>Tell i3 to focus on that window</li>
+<li>Transperent change of modes</li>
+<li>Nice to have: UI friendly</li>
+</ol>
+<h2 id="i3-finding-windows">i3 finding windows</h2>
+<p>To <a href="https://i3wm.org/docs/ipc.html" target="_blank" rel="noopener">interact with i3</a> there is a command tool called <a href="http://build.i3wm.org/docs/i3-msg.html" target="_blank" rel="noopener">i3-msg</a> which to me is easier to develop the <a href="https://i3wm.org/docs/userguide.html#command_criteria" target="_blank" rel="noopener">creteria</a> than updating i3 directly. The most common and easiest to control creterias where ‘class’ and ‘title’:</p>
+<blockquote>
+<p><em>class</em> Compares the window class (the second part of WM_CLASS). Use the special value __focused__ to match all windows having the same window class as the currently focused window.</p>
+</blockquote>
+<blockquote>
+<p><em>title</em> Compares the X11 window title (_NET_WM_NAME or WM_NAME as fallback). Use the special value __focused__ to match all windows having the same window title as the currently focused window.</p>
+</blockquote>
+<p>Now that I’m looking at it again, con_mark maybe a better option than title. But title can be set with the program lunch, at least with terminals. To make it work I defined all my key bindings that start applications in Urxvt to have the argument <code>-title &quot;APP_NAME&quot;</code>. However it didn’t go so well with terminals that have Tmux in them. I had to tell Tmux to not update the window title automatically, which I don’t have any use for anyway in I3: <code>set-option -g automatic-rename off</code> at ~/.tmux.conf. The end result is like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Pandora - F8</span><br><span class="line">exec urxvt256c-ml -title &quot;Pandora&quot; -ls -sb -bc -e ~/bin/pianobar</span><br><span class="line">for_window [class=&quot;URxvt&quot; title=&quot;Pandora&quot;] move to workspace 18, border none</span><br><span class="line">bindsym $mod+F8 exec urxvt256c-ml -title &quot;Pandora&quot; -ls -sb -bc -e ~/bin/pianobar</span><br><span class="line">bindsym F8 workspace 18</span><br></pre></td></tr></table></figure>
+<p>To change Firefox title required ugly workaround, an add-on - <a href="https://addons.mozilla.org/en-US/firefox/addon/firetitle/" target="_blank" rel="noopener">Firetitle</a>. <em>Which works magically! +1 to the maintainer</em>. This took care of 1 and 2. Implementing the actual mode switch took a bit of web search and came up with this setup:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">set $select Firefox (H)ome, (F)irefox RedHat, (T)erminal, (W)eeChat, (M)utt, (B)log, (P)andora, (W)iki, (D)iary</span><br><span class="line">mode &quot;$select&quot; &#123;</span><br><span class="line">    bindsym h exec --no-startup-id i3-msg &apos;[class=&quot;Firefox&quot; title=&quot;Home&quot;] focus&apos;</span><br><span class="line">    bindsym f exec --no-startup-id i3-msg &apos;[class=&quot;Firefox&quot; title=&quot;RedHat&quot;] focus&apos;</span><br><span class="line">    bindsym t exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Terminal&quot;] focus&apos;</span><br><span class="line">    bindsym g exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;WeeChat&quot;] focus&apos;</span><br><span class="line">    bindsym m exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Mutt&quot;] focus&apos;</span><br><span class="line">    bindsym b exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Blog&quot;] focus&apos;</span><br><span class="line">    bindsym p exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Pandora&quot;] focus&apos;</span><br><span class="line">    bindsym w exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Wiki&quot;] focus&apos;</span><br><span class="line">    bindsym d exec --no-startup-id i3-msg &apos;[class=&quot;URxvt&quot; title=&quot;Diary&quot;] focus&apos;</span><br><span class="line">    bindsym --release Menu mode &quot;default&quot;</span><br><span class="line">&#125;</span><br><span class="line">bindsym Menu mode &quot;$select&quot;</span><br></pre></td></tr></table></figure>
+<p>The nice thing about it is that it shows in the i3-status bar the options <code>Firefox (H)ome, (F)irefox RedHat, (T)erminal, (W)eeChat, (M)utt, (B)log, (P)andora, (W)iki, (D)iary</code> and I’m in that mode only when Menu button is pressed. Menu button, BTW, is that button between the right Alt and Ctrl. The only time I need it is when I’m doing something in web browser that needs that menu. I prefer the context switching over it.</p>
+<p>After writing this post, I’ve updated the configuration to:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">set $select Firefox (H)ome, (F)irefox RedHat, (T)erminal, (W)eeChat, (M)utt, (B)log, (P)andora, (W)iki, (D)iary</span><br><span class="line">mode &quot;$select&quot; &#123;</span><br><span class="line">    bindsym h [class=&quot;Firefox&quot; title=&quot;Home&quot;] focus</span><br><span class="line">    bindsym f [class=&quot;Firefox&quot; title=&quot;RedHat&quot;] focus</span><br><span class="line">    bindsym t [class=&quot;URxvt&quot; title=&quot;Terminal&quot;] focus</span><br><span class="line">    bindsym g [class=&quot;URxvt&quot; title=&quot;WeeChat&quot;] focus</span><br><span class="line">    bindsym m [class=&quot;URxvt&quot; title=&quot;Mutt&quot;] focus</span><br><span class="line">    bindsym b [class=&quot;URxvt&quot; title=&quot;Blog&quot;] focus</span><br><span class="line">    bindsym p [class=&quot;URxvt&quot; title=&quot;Pandora&quot;] focus</span><br><span class="line">    bindsym w [class=&quot;URxvt&quot; title=&quot;Wiki&quot;] focus</span><br><span class="line">    bindsym d [class=&quot;URxvt&quot; title=&quot;Diary&quot;] focus</span><br><span class="line">    bindsym --release Menu mode &quot;default&quot;</span><br><span class="line">&#125;</span><br><span class="line">bindsym Menu mode &quot;$select&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>Retrospective</strong>: After two weeks of usage I can’t say the transition is over. The old habit of desktop switching is still there, especially when I’m in a hurry. But when I use it normally I noticed that my first thought is of the new key binding. I didn’t disable the desktop switching as I find it useful for loose cases. I also noticed that some key bindings are easier to remember, such Menu-f for work Firefox. Some bindings are just easier to push (same example). But bindings like Menu-h, home Firefox, is just hard to push and remember. I wish Linux just could read my mind.</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/window-manager/" rel="tag"># window manager</a>
+          
+            <a href="/tags/i3/" rel="tag"># i3</a>
+          
+            <a href="/tags/productivity/" rel="tag"># productivity</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/07/ghost.py-venv/" rel="next" title="ghost.py venv">
+                <i class="fa fa-chevron-left"></i> ghost.py venv
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/24/fire_in_two_boxes/" rel="prev" title="Who needs browser anyway">
+                Who needs browser anyway <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Alexander Braverman Masis</p>
+              <p class="site-description motion-element" itemprop="description">Alexander Braverman Masis blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#i3-finding-windows"><span class="nav-number">1.</span> <span class="nav-text">i3 finding windows</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alexander Braverman Masis</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

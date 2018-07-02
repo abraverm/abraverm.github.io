@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Getting started integrating Kinect and Unity OSS in Linux">
+<meta name="keywords" content="kinect,unity,libfreenect">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kinect with Unity and libfreenect">
+<meta property="og:url" content="https://abraverm.github.io/2017/06/11/kinect_unity_libfreenect/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="Getting started integrating Kinect and Unity OSS in Linux">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-02T20:06:26.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kinect with Unity and libfreenect">
+<meta name="twitter:description" content="Getting started integrating Kinect and Unity OSS in Linux">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abraverm.github.io/2017/06/11/kinect_unity_libfreenect/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kinect with Unity and libfreenect | Alex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abraverm.github.io/2017/06/11/kinect_unity_libfreenect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alexander Braverman Masis">
+      <meta itemprop="description" content="Alexander Braverman Masis blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kinect with Unity and libfreenect
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-06-11 07:55:45" itemprop="dateCreated datePublished" datetime="2017-06-11T07:55:45+03:00">2017-06-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-02 23:06:26" itemprop="dateModified" datetime="2018-07-02T23:06:26+03:00">2018-07-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/VR/" itemprop="url" rel="index"><span itemprop="name">VR</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/VR/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Getting started integrating Kinect and Unity OSS in Linux</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
+<script src='/js/attachTooltips.js'></script>
+<link rel='stylesheet' href='/css/tippy.css'>
+<p><a href="https://abraverm.github.io/post/kinectvr_getting_started/">My first attempt with integrating Kinect and Unity</a> with out of the box solution named KinectVR didn’t go well. So I decided to look for another alternative, and found a [similar project based on OpenKinect][2] library (libfreenect). But of course it didn’t compile on my system, which caused me doubt my workspace. The real feeling that was annoying me is that there are so many things I don’t understand how they work in Unity. For example the C# scripting and how things are related and triggered. I was afraid they might be practicing witchcraft, A.K.A [Convention over Configuration][3] like Rails. This drove me to do Unity [tutorial Roll-a-Ball][4] which I have to say was very good and fun. It was also a great method to clean start my workspace.</p>
+<h1 id="getting-started-with-unity-in-linux">Getting started with Unity in Linux</h1>
+<ol type="1">
+<li>Download the [latest compiled version][5] of Unity for Linux</li>
+</ol>
+<blockquote>
+<p>In theory you might be able to build Unity from source, but I didn’t find a guide for it.</p>
+</blockquote>
+<p>Go to the last post in the thread, and you will see a link like this one: “http://beta.unity3d.com/download/45784aaa9968/public_download.html”</p>
+<p>Download the “Platform-Agnostic Self-Extracting Shell Script”, I got a file named ‘unity-editor-installer-5.4.2f2+20161111.sh’</p>
+<ol start="2" type="1">
+<li>Install Unity:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chmod +x unity-editor-installer-5.4.2f2+20161111.sh</span><br><span class="line">sudo ./unity-editor-installer-5.4.2f2+20161111.sh</span><br><span class="line">mv unity-editor-5.4.2f2 ~/Unity # or anywhere else you want</span><br><span class="line">cp *.desktop $HOME/.local/share/applications</span><br></pre></td></tr></table></figure>
+<p>Next, edit the desktop files and adjust the path to where you install Unity:</p>
+<ul>
+<li><code>$HOME/.local/share/applications/unity-monodevelop.desktop</code></li>
+<li><code>$HOME/.local/share/applications/unity-editor.desktop</code></li>
+</ul>
+<p>For example <code>$HOME/.local/share/applications/unity-monodevelop.desktop</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Version=0.0.0f0</span><br><span class="line">Name=Unity</span><br><span class="line">Exec=/home/abraverm/Unity/Editor/Unity %F</span><br><span class="line">Exec=/home/abraverm/Unity/Editor/Unity %U</span><br><span class="line">Icon=unity-editor-icon</span><br><span class="line">Terminal=false</span><br><span class="line">Type=Application</span><br><span class="line">StartupNotify=true</span><br><span class="line">Categories=Development;IDE;Application;</span><br><span class="line">MimeType=x-scheme-handler/com.unity3d.kharma;</span><br></pre></td></tr></table></figure>
+<p>You should be able to find Unity where you find all your other applications. If you want to start Unity from command line, call it directly: <code>~/Unity/Editor/Unity</code> or add it to your PATH (out of scope for this guide).</p>
+<ol start="3" type="1">
+<li>Run and configure Unity</li>
+</ol>
+<p>Start Unity Editor from your application menu or from the command line. To verify that everything is in order, create a new project, like showed in [Roll-a-Ball tutorial][6]. Create a script in the project, like demonstrated in the next tutorial of [Roll-a-Ball][7], and try to open it.</p>
+<p>If for some reason it doesn’t open, configure Unity to use unity-monodevelop manually, by going in the menu to: <code>Edit -&gt; Prefrences -&gt; External Tools</code> Then click on the drop list of <code>External Script Editor</code> and select <code>browse</code>. Enter <code>~/Unity/MonoDevelop/bin/monodevelop</code>, or wherever you installed Unity. Now its possible to use other editor or globally installed MonoDevelop with package manager, but Unity people configured it to work with Unity well, for example auto-complete C# and nice help quick search. Trust me, I prefer using VIM, and I’m working on making it happen but we are getting started here, right?</p>
+<ol start="4" type="1">
+<li>Version Control it</li>
+</ol>
+<p>I think that any modern project must have version control, as its the only way we can collaborate and effectively debug issues. My personal favorite version control system is Git, but the following changes easily can be adjusted for any other system. Unity by default stores configurations and other 3d data in binary form. This maybe improve performance on large projects but its a critical blow to version control, as it takes a lot of storage and impossible to version it. So in any project you start working with, you have to do the following:</p>
+<ol type="a">
+<li>[Make everything in text][9]</li>
+</ol>
+<p><code>Editor → Project Settings → Editor → Asset Serialization Mode: Force Text</code></p>
+<ol start="2" type="a">
+<li>Ignore temporary and other not to be version controlled files in [<code>.gitignore</code>][10]:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">===============</span><br><span class="line">Unity generated</span><br><span class="line">===============</span><br><span class="line">Temp/</span><br><span class="line">Library/</span><br><span class="line"></span><br><span class="line">=====================================</span><br><span class="line">Visual Studio / MonoDevelop generated</span><br><span class="line">=====================================</span><br><span class="line">ExportedObj/</span><br><span class="line">obj/</span><br><span class="line">*.svd</span><br><span class="line">*.userprefs</span><br><span class="line">/*.csproj</span><br><span class="line">*.pidb</span><br><span class="line">*.suo</span><br><span class="line">/*.sln</span><br><span class="line">*.user</span><br><span class="line">*.unityproj</span><br><span class="line">*.booproj</span><br></pre></td></tr></table></figure>
+<ol start="3" type="a">
+<li>[Smart merge things][11]</li>
+</ol>
+<p>Add the following text to your .git/config or .gitconfig file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[merge]</span><br><span class="line">tool = unityyamlmerge</span><br><span class="line"></span><br><span class="line">[mergetool &quot;unityyamlmerge&quot;]</span><br><span class="line">trustExitCode = false</span><br><span class="line">cmd = &apos;&lt;path to Unity&gt;/Editor/Data/Tools/UnityYAMLMerge&apos; merge -p &quot;$BASE&quot; &quot;$REMOTE&quot; &quot;$LOCAL&quot; &quot;$MERGED&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Adjust the cmd setting above to the correct path of Unity.</p>
+</blockquote>
+<h1 id="getting-started-with-openkinect">Getting started with OpenKinect</h1>
+<ol type="1">
+<li>Compile from source</li>
+</ol>
+<p>The OpenKinect library comes with very useful tools and wrappers, and if your OS provides the library, it probably doesn’t come will all the tools and wrappers. In our case we will need the C# wrapper, and for development it would be nice to use fakenect a simulator of Kinect.</p>
+<ol type="a">
+<li>OpenCV - optional (if want python wrapper too)</li>
+</ol>
+<p>My favorite language is Monty Python, so I prefer having Python wrapper just in case, we are getting started here, right? Python wrapper example require import of cv library, however it was deprecated from latest major version (3) of OpenCV. The problem is that OpenCV 2 is not available in Pip or in your package manager (probably), so we have to [build it ourselves][12][13]:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install requirements(maybe you don't need everthing, or maybe you need more?):</span></span><br><span class="line">dnf install cmake python-devel numpy gcc gcc-c++ gtk2-devel libdc1394-devel \</span><br><span class="line">  libv4l-devel ffmpeg-devel gstreamer-plugins-base-devel libpng-devel \</span><br><span class="line">  libjpeg-turbo-devel jasper-devel openexr-devel libtiff-devel libwebp-devel \</span><br><span class="line">  tbb-devel eigen3-devel python-sphinx texlive</span><br><span class="line"><span class="comment"># I have special directory for this cases at ~/src</span></span><br><span class="line"><span class="built_in">cd</span> ~/src</span><br><span class="line"><span class="comment"># This step will take some time..</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/opencv/opencv.git</span><br><span class="line"><span class="comment"># We need our OpenCV version 2</span></span><br><span class="line">git checkout 2.4.13</span><br><span class="line"></span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure</span></span><br><span class="line">cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/<span class="built_in">local</span> ..</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build - another cup of coffee</span></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install(?) - I don't need OpenCV for anything else so I don't care installing</span></span><br><span class="line"><span class="comment"># it globallly. If you don't feel like it, well.. hmm.. write a post ;)</span></span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># Move the module to Python path</span></span><br><span class="line">sudo cp /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/cv2.so /usr/lib/python2.7/site-packages</span><br></pre></td></tr></table></figure>
+<p>You can verify this works with running: <code>python -c &quot;import cv;print cv.__file__&quot;</code></p>
+<ol start="2" type="a">
+<li>Configure and Build libfreenect</li>
+</ol>
+<p>The process is pretty [straight forward][8]:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Follow the instructions of [Fetch &amp; Build][9] 2. Test and verify</p>
+<h1 id="example-unity-project-with-openkinect">Example Unity project with OpenKinect</h1>
+<p>Running the built project for Linux: <code>mono my_project.x86_64</code></p>
+<p>[2]: [3]: https://en.wikipedia.org/wiki/Convention_over_configuration [4]: https://unity3d.com/learn/tutorials/projects/roll-ball-tutorial [5]: https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/ [6]: https://unity3d.com/learn/tutorials/projects/roll-ball-tutorial/setting-game?playlist=17141 [7]: https://unity3d.com/learn/tutorials/projects/roll-ball-tutorial/moving-player?playlist=17141 [8]: https://openkinect.org/wiki/Getting_Started#Manual_Build_on_Linux# [9]: https://docs.unity3d.com/Manual/class-EditorManager.html [10]: https://unity3d.com/learn/tutorials/topics/production/mastering-unity-project-folder-structure-version-control-systems [11]: https://docs.unity3d.com/Manual/SmartMerge.html [12]: http://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html [13]: http://docs.opencv.org/3.1.0/dd/dd5/tutorial_py_setup_in_fedora.html</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kinect/" rel="tag"># kinect</a>
+          
+            <a href="/tags/unity/" rel="tag"># unity</a>
+          
+            <a href="/tags/libfreenect/" rel="tag"># libfreenect</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/09/kinectvr_getting_started/" rel="next" title="kinectvr_getting_started">
+                <i class="fa fa-chevron-left"></i> kinectvr_getting_started
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/13/github-firewalld-jenkins-integration/" rel="prev" title="Github integration with Jenkins behind firewall">
+                Github integration with Jenkins behind firewall <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Alexander Braverman Masis</p>
+              <p class="site-description motion-element" itemprop="description">Alexander Braverman Masis blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#getting-started-with-unity-in-linux"><span class="nav-number">1.</span> <span class="nav-text">Getting started with Unity in Linux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getting-started-with-openkinect"><span class="nav-number">2.</span> <span class="nav-text">Getting started with OpenKinect</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#example-unity-project-with-openkinect"><span class="nav-number">3.</span> <span class="nav-text">Example Unity project with OpenKinect</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alexander Braverman Masis</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
