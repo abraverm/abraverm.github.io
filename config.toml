@@ -41,7 +41,7 @@ PygmentsStyle = "monokai"
   hide_author = false
 
   # Optional, set true to enable section menu
-  show_menu = false
+  show_menu = true
 
   # Optional, set false to disable credits
   powered_by = true
@@ -53,3 +53,19 @@ PygmentsStyle = "monokai"
 
   # Optional, for use to overriding default theme
   theme_variant = ""
+
+[[menu.main]]
+  name = "Home"
+  weight = 1
+  identifier = "home"
+  url = "/"
+[[menu.main]]
+  name = "Posts"
+  weight = 2
+  identifier = "post"
+  url = "/post/"
+[[menu.main]]
+  name = "Bookmarks"
+  weight = 3
+  identifier = "bookmark"
+  url = "/bookmark/"

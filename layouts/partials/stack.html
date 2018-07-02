@@ -1,0 +1,13 @@
+{{ if and (isset .Params "stack") .Params.stack  }}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/jquery.stacktack.js"></script>
+<script type="text/javascript"> 
+    $(document).ready(function() {
+        $(document).stacktack(
+          {
+            stylesheet: '/css/stacktack.css'
+          }
+        );
+    });
+</script>
+{{ end }}
