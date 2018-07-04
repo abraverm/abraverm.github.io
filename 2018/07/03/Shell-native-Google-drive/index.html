@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="&amp;lt;%- toc(page.content) %&amp;gt; A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and push">
+  <meta name="description" content="A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and pushing, just like Git. So while I’">
 <meta name="keywords" content="google,vim,filesystem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell native Google drive">
 <meta property="og:url" content="https://abraverm.github.io/2018/07/03/Shell-native-Google-drive/index.html">
 <meta property="og:site_name" content="Alex&#39;s Blog">
-<meta property="og:description" content="&amp;lt;%- toc(page.content) %&amp;gt; A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and push">
+<meta property="og:description" content="A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and pushing, just like Git. So while I’">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-03T08:23:30.570Z">
+<meta property="og:updated_time" content="2018-07-04T08:49:25.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell native Google drive">
-<meta name="twitter:description" content="&amp;lt;%- toc(page.content) %&amp;gt; A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and push">
+<meta name="twitter:description" content="A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using drive which requires manual pulling and pushing, just like Git. So while I’">
 
 
   
@@ -339,6 +339,22 @@
             
 
             
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-04 11:49:25" itemprop="dateModified" datetime="2018-07-04T11:49:25+03:00">2018-07-04</time>
+              
+            
           </span>
 
           
@@ -384,7 +400,6 @@
         <script src='https://unpkg.com/tippy.js@2.0.2/dist/tippy.all.min.js'></script>
 <script src='/js/attachTooltips.js'></script>
 <link rel='stylesheet' href='/css/tippy.css'>
-<p>&lt;%- toc(page.content) %&gt;</p>
 <p>A year ago I’ve built a setup where I can edit my Google drive documents with Vim but it didn’t catch because I was using <a href="https://github.com/odeke-em/drive" target="_blank" rel="noopener">drive</a> which requires manual pulling and pushing, just like Git. So while I’m using Git on daily basis, Google drive is only needed when I want to collaborate or easily share a document which apparently is not so often. After short dry time and maybe some small issues, I forgot about it. However it’s still a sour point for me because I’m browsing with <a href="https://github.com/qutebrowser/qutebrowser" target="_blank" rel="noopener">Qutebrowser</a> and editing Google docs in it is not so fluent.</p>
 <p>Yesterday, my friend Shaked shared with me a nice gem, <a href="https://github.com/harababurel/gcsf" target="_blank" rel="noopener">GCSF</a>:</p>
 <blockquote>
@@ -396,7 +411,9 @@
 <li>Install <a href="https://github.com/harababurel/gcsf" target="_blank" rel="noopener">GCSF</a> and mount your Google drive.</li>
 <li>Install <a href="https://pandoc.org/installing.html" target="_blank" rel="noopener">Pandoc</a>.</li>
 <li>Browse to <a href="https://drive.google.com/drive/settings" target="_blank" rel="noopener">Google drive settings</a>, check the box ‘Convert Uploads’.</li>
-<li>Add to your Vim configuration (.vimrc): <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">autocmd</span> BufReadPost *.odt :%!pandoc -<span class="keyword">f</span> odt -t markdown</span><br><span class="line"><span class="keyword">autocmd</span> BufWritePost *.odt :!pandoc -<span class="keyword">f</span> markdown -t odt % -<span class="keyword">o</span> <span class="string">"%:r"</span>.odt</span><br></pre></td></tr></table></figure></li>
+<li><p>Add to your Vim configuration (.vimrc): <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">autocmd</span> BufReadPost *.odt :%!pandoc -<span class="keyword">f</span> odt -t markdown</span><br><span class="line"><span class="keyword">autocmd</span> BufWritePost *.odt :!pandoc -<span class="keyword">f</span> markdown -t odt % -<span class="keyword">o</span> <span class="string">"%:r"</span>.odt</span><br></pre></td></tr></table></figure></p></li>
+<li>Create user service at <code>~/.config/systemd/user/</code>: <script src="//gist.github.com/b9c9419b18b5ddfc3e8a2138c9b0080e.js?file=gcsf.service"></script></li>
+<li><p>Enable and start the service <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user <span class="built_in">enable</span> gcsf</span><br><span class="line">systemctl --user start gcsf</span><br></pre></td></tr></table></figure></p></li>
 </ol>
 <p>Notes:</p>
 <ul>
